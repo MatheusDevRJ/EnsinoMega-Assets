@@ -460,4 +460,4 @@ questions.matematica = _ => [
 ];
 
 upSubject();
-msg(subjectName + "!");
+msg(subjectDisplayName + "!");

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<title>EnsinoMega</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Matheus Martins De Oliveira">
+<meta name="description" content="A melhor forma de estudar!">
+<meta name="keywords" content="ensinomega, ensinome.ga, ActiveRecall, SpacedRepetition, Encoding">
+<meta name="theme-color" content="#000">
+<link rel="icon" href="logo.svg" />
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="logo.svg">
+<link rel="stylesheet" type="text/css" href="styles.css">
+<script src="js/main.js" type="text/javascript" defer></script>
+<script src="js/firebase.js" type="text/javascript" defer></script>
+</head>
+
+<body>
+<div id="msg-container" onclick="hide($('#msg'))">
+<p id="msg" class="hided bold"></p>
+</div>
+<div id='container' class="width-50 center padding-bottom-100">
+<section id="subjects-container" class="hided">
+<div class="padding">
+<a href="https://ensinome.ga" class='font-big logo'>Ensino <i data-svg='logo'></i> Mega</a>
+</div>
+</section>
+<main class="hided">
+<header class="row border-bottom font-middle padding-15 margin-bottom-30">
+<button onclick="$('#menu-container').classList.toggle('menu-open')" data-svg='menu'
+class="font-big text-align-left low-opacity width-100" title="menu"></button>
+<button onclick="addUrlArgument()" title='Matérias' id='subjects-btn'
+class="low-opacity width-100"></button>
+<button id="login-btn" title="Login" class="text-align-right low-opacity width-100"
+data-svg='user'></button>
+</header>
+<nav id="menu-container" class='hided'>
+<div id="menu">
+<div class="width-100" id="user-container" onclick="$('#menu-overlay').click()">
+<span class="font-middle block">Ensino <i data-svg='logo'></i> Mega</span>
+</div>
+<hr>
+<div class="width-100" id="menu-options">
+<button id="sync-btn" data-svg='sync' class="hided border-radius">Sincronizar Progresso</button>
+<button id="pomodoro-btn" data-svg='tomato' class="openSection">Pomodoro</button>
+<button id='font-size-btn' onclick="fontSize += fontSize > 24 ? -9 : 1; upFontSize()"></button>
+<button id="theme-btn"></button>
+<button id="logout-btn" class="hided" data-svg="logout">Sair</button>
+<div id="theme-config-container" class="hided"></div>
+</div>
+</div>
+<div onclick="$('#menu-container').classList.toggle('menu-open')" id="menu-overlay"></div>
+</nav>
+<div id="pomodoro-container" class="hided space" style="border-bottom: 2px solid #ff6633;"></div>
+<div class="row">
+<button onclick="studyActiveSub(-1)" class='font-big low-opacity' title='Anterior'>&lsaquo;</button>
+
+<p style="width: 70%; padding: 6px;" id='collection-options-btn'
+class="openSection low-opacity outline-none"
+oninput="showHide($('.topic-container'), el => el.innerHTML.toLowerCase().includes(this.innerText.trim().toLowerCase()));"
+onfocus="openSection(this); showTopics()" contenteditable="true"></p>
+
+<button onclick="studyActiveSub()" class='font-big low-opacity' title='Próximo'>&rsaquo;</button>
+</div>
+<section id="collection-options-container" class="font-normal hided space border-bottom">
+<button class='block center' id='progress-overview'></button>
+<div id="toggle-subs-container"></div>
+<div class="personalized-mode-feature hided red-background padding margin-bottom-30 sides-border">
+<p class="red">NÃO use códigos de terceiros em sua coleção!</p>
+<button id="share-collection-btn" data-svg='share' tt="Compartilhar"></button>
+<button onclick="if(confirm('Apagar Coleção?')) upProgress([])" data-svg='bin'
+tt="Remover Todos"></button>
+<button id="import-native-topics-btn" data-svg='import' tt="Importar Nativos"></button>
+</div>
+<div id='topics-container'></div>
+</section>
+<div id="topic-form-container" class="personalized-mode-feature hided space border-bottom"></div>
+<div class="row sides-margin-30">
+<button id="learn-btn" class="width-30">Aprender</button>
+<button id='challenge-btn' class="openSection low-opacity round width-30" tt='Desafio!'></button>
+<button id="review-btn" class="width-30">Revisar</button>
+</div>
+<div id='communicate-container'>
+<div id="communicate"></div>
+<form id='send-suggestion-container' class='margin-bottom-30'>
+<hr>
+<label for="sujestion" class='inline-block margin-15' data-svg-after='help'>Ajude com
+sujestões<br></label>
+<textarea id='suggestion' placeholder="Sujestões" minlength="10" maxlength='1000'
+required></textarea>
+<button data-svg-after="send">Enviar &nbsp;&nbsp;</button>
+</form>
+<hr>
+<p class='inline-block margin-15' data-svg-after="help">Ajude doando qualquer valor<br></p>
+<button onclick="clipWrite('MatheusDevRJ@gmail.com')" class="block center"
+tt="Pix - Matheus Martins de Oliveira" data-svg="pix">&nbsp; MatheusDevRJ@gmail.com</button>
+<a tt="Paypal" href='https://www.paypal.com/donate?hosted_button_id=65N2Z2YSSFJ6G' target='_blank'>
+<button data-svg="paypal">&nbsp; MatheusDevRJ@gmail.com</button>
+</a>
+</div>
+<div id="question-container">
+<section class="hided padding gold-background border-radius" id="challenge-container"></section>
+<div id="question" class="margin-bottom-30 overflow-hidden"></div>
+<div id="set-review-date-container" class="hided">
+<button onclick="showHide(this.nextElementSibling)" tt="Remarcar">
+<i data-svg='calendarCheck' class="font-middle"></i><br>
+<span id="review-date"></span>
+</button>
+<form class="hided">
+<label for='set-review-date-input'>Revisar em</label>
+<input id="set-review-date-input" type="number" required min="1" class="width-30">
+<label for='set-review-date-input'>dias</label>
+<button class="block center" data-svg='editCalendar'> Remarcar</button>
+</form>
+</div>
+<button id="remake-btn" data-svg='remake' tt='Segure e repita automaticamente'></button>
+<button id="next-btn" data-svg='next' tt='Segure e avance automaticamente'></button>
+<div id="question-nav-container">
+<button onclick="showHide($('#question-nav'))" id="question-nav-btn" data-svg='cog'
+class="font-middle low-opacity block center"></button>
+<nav id='question-nav' class='hided'>
+<button id='sounds-btn' data-svg='headphones' class="openSection" tt='Sons'></button>
+<button id='daily-goal-btn' data-svg='target' class="openSection" tt='Meta Diária'></button>
+<button id='report-error-btn' data-svg='flag' class="openSection" tt='Reportar Erro'></button>
+<button onclick="clipWrite(`${domain}/?subject=${subject}&subId=${sub.id}`);" data-svg='link'
+tt='Copiar link da questão'></button>
+<button id="toggle-sub-btn"></button>
+</nav>
+<section id="sounds-container" class="hided padding-30 blue-background border-radius"></section>
+<section id="daily-goal-container" class="hided padding-30 green-background border-radius">
+</section>
+<section id='report-error-container' class='hided padding-30 red-background border-radius'>
+<form>
+<label class='sr-only' for="error-msg">Erro</label>
+<textarea class='block' id='error-msg' minlength="10" maxlength='1000' required
+placeholder="Erro encontrado ou sugestão de melhoria na questão"></textarea>
+<button data-svg-after="send">Enviar &nbsp;&nbsp;</button>
+</form>
+</section>
+</div>
+<div id='question-help-container'>
+<div class="row margin-bottom-15">
+<button id="videos-btn" class="openSection" data-svg='play'><br>Vídeos</button>
+<button id="explanation-btn" class="openSection" data-svg='book'><br>Explicação</button>
+<button id="annotations-btn" class="openSection" data-svg='write'><br>Anotações</button>
+</div>
+<section id="videos-container" class='hided'></section>
+<section id="explanation-container" class='hided'></section>
+<section id="annotations-container" class="hided">
+<div id="annotations" oninput="show($('#save-annotations-btn'))" class="padding margin-15 input"
+contenteditable="true"></div>
+<button id="save-annotations-btn" class='hided' data-svg='save'> &nbsp;Salvar</button>
+</section>
+<hr>
+<button data-svg='question' onclick="showHide($('#facebook-groups-container'))" class='low-opacity'>
+<br>
+Tirar dúvidas</button>
+<div id="facebook-groups-container" class="hided sides-margin-30 text-align-left"></div>
+</div>
+</div>
+</main>
+</div>
+<script>
+if ("serviceWorker" in navigator && location.host) navigator.serviceWorker.register("sw.js");
+</script>
+</body>
+
+</html>

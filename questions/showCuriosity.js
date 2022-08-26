@@ -6,7 +6,7 @@ function showCuriosity() {
   div.innerHTML = `<hr><p>${getCuriosity()}</p>`;
   setAnimation(1, "X");
   $("#question").insertAdjacentElement("beforeend", div);
-  speak($("#curiosity").innerText);
+  if (!autoRemake && !autoNext && sp.speakText) speak($("#curiosity").innerText);
 }
 
 function getCuriosity() {

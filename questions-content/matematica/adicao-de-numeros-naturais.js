@@ -1,4 +1,4 @@
-loadRequestedTopic([{
+questionsContent.push(...[{
       "topic": "Adição de números naturais",
       "name": "Cálculo Mental 1",
       "id": 1,
@@ -66,6 +66,7 @@ loadRequestedTopic([{
       "reviewDate": 220,
       "interval": 1,
       "explanation": "${dinamicExample(() => {rns(3, 20, 1); return `<p class='ex'>COMUTATIVA<br>A ordem das parcelas <u>NÃO</u> altera a soma.</p><p>${n1} + ${n2} = ${n2} + ${n1}</p>&darr;<p>${n1} + ${n2} = ${n1 + n2}<br>\n${n2} + ${n1} = ${n2 + n1}</p><br><p>${n1} + ${n2} + ${n3} = ${n3} + ${n2} + ${n1}</p>&darr;<p>${n1} + ${n2} + ${n3} = ${n1 + n2 + n3}<br>\n${n3} + ${n2} + ${n1} = ${n3 + n2 + n1}</p>`;})}\n\n${goldenBorder(`<p>Propriedade <b>associativa</b> da adição:</p><br><p>Numa adição de três ou mais parcelas, não importa a ordem em que realizamos as somas, o total é o mesmo.</p><br><p>Os parênteses () indicam qual soma deve ser feita primeiro.</p>`)}\n${dinamicExample(() => {\nrns(3, 20, 1); \nreturn `\n<div class='text-align-center'>\n   <p>(${n1} + ${n2}) + ${n3} = ${n1} + (${n2} + ${n3})<br>&darr;</p>\n   <div class='inline-block'>\n      <p>${invisibleText('=')} (${n1} + ${n2}) + ${n3}<br>= ${n1 + n2} + ${n3}<br>= ${n1 + n2 + n3}</div>\n       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n       <div class='inline-block'>\n         <p>${invisibleText('=')} ${n1} + (${n2} + ${n3})<br>= ${n1} + ${n2 + n3}<br>= ${n1 + n2 + n3}\n        </div>\n</div>`})}\n${goldenBorder(`<p>Propriedade do <b>elemento neutro</b> da adição:</p><br><p>Qualquer número somado a 0 será ele mesmo.</p>`)}\n${dinamicExample(() => {const n1 = rn(20, 1); return `<p>${shuffle([n1, 0]).join(' + ')} = ${n1}</p>`})}"
-    }], "Adição de números naturais");
-
-    msg("top!");
+    }]);
+    
+requestedTopicCallback("Adição de números naturais");
+msg("Adição de números naturais!");

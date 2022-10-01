@@ -16,7 +16,6 @@ function getCuriosity() {
     '<b>Rio de Janeiro</b> já foi a <b>capital de Portugal</b>.<br>Em 1763 se tornou a 1ª e única capital europeia fora do território europeu.',
     '<b>Elefantes</b> são os únicos mamíferos que não conseguem saltar.',
     '<b>Borboletas</b> têm 12 mil olhos, enxergam em 360º e veem raios ultravioletas imperceptíveis a nós.',	
-    'Faça da sua recaída a sua ascensão!",
   ];
 
   let curiositiesIndexes = lsGet("curiositiesIndexes");
